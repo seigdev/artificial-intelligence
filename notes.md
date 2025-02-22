@@ -38,7 +38,7 @@
 - Transformer
 - BERT
 
-# Toenization
+## Toenization
 
 converting text contents into tokens.
 
@@ -49,73 +49,101 @@ converting text contents into tokens.
 
 Paragraphs => Sentences => Unique Words (Vocabulary)
 
-
 ## One hot encoding
 
 - converting texts to vectors.
 - unique vocabulary play important role in one hot encoding. figure out the unique vocabularies first.
 
-      Texts                 O/P
-D1    The food is bad       1
-D2    The food is good      0
-D3    Pizza is amazing      1
+        Texts                 O/P
+
+  D1 The food is bad 1
+  D2 The food is good 0
+  D3 Pizza is amazing 1
 
 Unique words : The food is good bad pizza amazing
- 
+
 - when applying one hot encoding you convert specific words into vector representations of the unique words. example below :
 
 "The" in D1
-- vector representation 
-The food is good bad pizza amazing
-1   0    0  0    0   0     0
+
+- vector representation
+  The food is good bad pizza amazing
+  1 0 0 0 0 0 0
 
 "food" in D1
-- vector representation 
-The food is good bad pizza amazing
-0   1    0  0     0   0     0
+
+- vector representation
+  The food is good bad pizza amazing
+  0 1 0 0 0 0 0
 
 therefore, vector representation of D1
 
 D1 = [[1,0,0,0,0,0,0],
       [0,1,0,0,0,0,0],
       [0,0,1,0,0,0,0],
-      [0,0,0,1,0,0,0]] 
+      [0,0,0,1,0,0,0]]
 D1.shape = 4 x 7
 
 D2 = [[1,0,0,0,0,0,0],
       [0,1,0,0,0,0,0],
       [0,0,1,0,0,0,0],
-      [0,0,0,0,1,0,0]] 
+      [0,0,0,0,1,0,0]]
 D2.shape = 4 x 7
 
 D3 = [[0,0,0,0,0,1,0],
       [0,0,1,0,0,0,0],
-      [0,0,0,0,0,0,1]] 
+      [0,0,0,0,0,0,1]]
 D3.shape = 3 x 7
 
+- disadvantages
+  - sparse matrix
+  - out of vocabulary
+  - semantic meaning still not captured
 
 ## bag of words
+
 - step one : dataset available
-- step two : 
+- step two :
   - change all texts to lowercase
   - apply stopwords
-  - 
+  -
+- disadvantages
+  - sparse matrix
+  - out of vocabulary
+  - semantic meaning still not getting captured
 
+## TF - IDF
 
+- Term Frequency is the no of repition of words / no of words in sentence.
+- Inverse Document Frequency is the log(no of sentences / no of sentences containing the word)
+
+- advantages
+
+  - intuitive
+  - fixed size --> vocab size
+  - word importance is getting captured
+
+- disadvantages
+  - sparsity still exists
+  - OOV
+
+## Word Embedding
+  - converts the words in a text to vectors and find words with similar meaning using ttechniques like word2Vec.
 
 ## Logistic Regression
+
 - Supervised Learning
   inputs requires a label and has an expected output.
 
 - Sentiment Analysis
   - Tweet : I am happy becuase I am learing NLP
-    - Objective : predictive wether it is a positive sentiment or negative using logistics  regression classifier. 
+    - Objective : predict wether it is a positive sentiment or negative using logistics regression classifier.
       - Positive : 1
       - Negative : 0
-          - Process raw tweet in training set.
-          - extract useful features.
-          - train logistics regression classifier with minimizing cost.
-          - ability to make prediction.
+        - Process raw tweet in training set.
+        - extract useful features.
+        - train logistics regression classifier with minimizing cost.
+        - ability to make prediction.
 
 NB : to get the frequency of a word in your vocabulary, you would have to count the number of times it appears.
 
@@ -126,7 +154,29 @@ NB : to get the frequency of a word in your vocabulary, you would have to count 
   X(m) = [1(bias),sum(pos(1)),sum(neg(0))]
 
 - Preprocessing Tweets
-  - stopwords and punctuations
+  - clean texts (tweets)
+    - lowercasing
+    - removing punctuations, stopwords, handles, urls, applying contractions.. ref: wee2_pipeline_part1
     NB: punctuation can add specific meaning to your nlp task.
-  - handles and Urls
-  - Stemming and lowercasing
+  - Stemming/Lemmetization
+  - sentence segmentation, word tokenization,
+  - stop words, punctuations and digits removal,
+  - stemming, Lemmatization,
+  - part Of Speech tagging, Code Mixing and translation
+
+<!-- [expression for item in iterable if condition] -->
+- expression can be the statement in the for loop
+- then takes the condition at the later.
+
+## BERT
+  - bidirectional encoder representations from transformer
+
+## Tokenization
+  - WhiteSpaceTokenizer (space, tabs, e.t.c)
+  - UnicodeScriptTokenizer (words, punctuations, e.t.c)
+  - sub word tokenization splits words into smaller unit
+  - BERT Tokenizer uses wordPiece
+  - SentencePieceTokenizer configurable subwords tokenizer, helps to split OOV words
+  - UnicodeCharTokenizer splits words into individual characters useful for text generation
+      - helps unders word structure (morphology) e.g unhappy... "un", "happy"
+   
